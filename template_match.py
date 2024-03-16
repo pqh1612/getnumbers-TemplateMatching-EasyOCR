@@ -58,10 +58,10 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
 
                 cv2.rectangle(image_in, (x, y), (x + w + DAMAGE_TEXT_LENGTH, y + h), (0,255,255), 2)
                 #crop image to get only numbers
-                #cropped_image = image_in[y:y+h, x:x + w + DAMAGE_TEXT_LENGTH] 
-                cropped_image = image_in
+                cropped_image = image_in[y:y+h, x:x + w + DAMAGE_TEXT_LENGTH] 
+                #cropped_image = image_in
 
-                currentTime = datetime.datetime.now().strftime("%d-%m-%Y %H-%M-%S.%f")[:-3]
+                currentTime = datetime.datetime.now().strftime("%d-%m-%Y--%H-%M-%S.%f")[:-3]
                 cv2.imwrite('./dmg_frame_data/' + f'{currentTime}' + '_dmg_instance_' + str(iteration + 1) + '.png', cropped_image)
 
             if len(new_y) < rectangle_number:
