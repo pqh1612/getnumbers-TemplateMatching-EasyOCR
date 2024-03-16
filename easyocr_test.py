@@ -14,7 +14,7 @@ def easyocr_recognition(image_path):
     reader = easyocr.Reader(['en'], gpu=True)
 
     # detect text on image
-    text_ = reader.readtext(img)
+    text_ = reader.readtext(img, allowlist='0123456789', detail=0)
 
     # draw bbox and text
     for t_, t in enumerate(text_):
@@ -31,3 +31,4 @@ def easyocr_recognition(image_path):
 
 result = easyocr_recognition(image_path)
 print(result)
+
