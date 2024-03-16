@@ -1,34 +1,31 @@
-#https://github.com/computervisioneng/text-detection-python-easyocr/blob/master/main.py
-
 import cv2
 import easyocr
-THRESHOLD = 0.25
+import os
 
-# read image
-image_path = './tof_damage_text_small.png'
-
-def easyocr_recognition(image_path):
-    img = cv2.imread(image_path)
-
-    # instance text detector
+def easyocr_recognition(image_folder):
+    # initiate text detector instance
     reader = easyocr.Reader(['en'], gpu=True)
 
-    # detect text on image
-    text_ = reader.readtext(img, allowlist='0123456789', detail=0)
+    # iterate over image files in the folder
+    for filename in os.listdir(image_folder):
 
-    # draw bbox and text
-    for t_, t in enumerate(text_):
-        print(t)
+        if filename.endswith(".png") or filename.endswith(".jpg"):
+            image_path = os.path.join(image_folder, filename)
+            img = cv2.imread(image_path)
 
-        bbox, text, score = t
+            # make img 3 times bigger for better recognition
+            resize_factor = 3.0
+            img = cv2.resize(img, (0,0), fx = resize_factor, fy = resize_factor)
 
-        if score > THRESHOLD:
-            cv2.rectangle(img, bbox[0], bbox[2], (0, 255, 0), 5)
-            cv2.putText(img, text, bbox[0], cv2.FONT_HERSHEY_COMPLEX, 0.65, (255, 0, 0), 2)
-    
-    number_from_img = text
-    return number_from_img
+            text_ = reader.readtext(img)
+            print(text_)  #keep for debugging 
 
-result = easyocr_recognition(image_path)
-print(result)
+            # get text result by OCR from 'text_' list and put in output.txt
+            with open('output.txt', 'a') as file:
+                for t in text_:
+                    coordinate, text, score = t
+                    file.write(text + '\n')
+
+image_folder = './dmg_frame_data/'
+easyocr_recognition(image_folder)
 
