@@ -4,20 +4,48 @@ from template_match import template_matching, detection_check
 from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
-#vid_directory = './vid_directory/2023-11-23 18-20-35.mkv'
-vid_directory = './vid_directory/otter_multi_atk.mkv'
-tmplt_directory = './tmplt_directory/tof_matching_template.png'
-temp_img_directory = 'temp_image.png'
+vid_folder = './vid_directory/'
+for vid_filename in os.listdir(vid_folder):
+    if 'vid' in vid_filename:
+        if vid_filename.endswith(".mp4") or vid_filename.endswith(".mkv"):
+            vid_directory = os.path.join(vid_folder, vid_filename)
+        else:
+            print("Please set name and extension of video to 'vid.mp4' or 'vid.mkv'")
+            exit()
+
+    if vid_filename == None:
+        print("No vid.mp4 or vid.mkv found in the directory")
+        exit()
+
+tmplt_folder = './tmplt_directory/'
+for tmplt_filename in os.listdir(tmplt_folder):
+    if 'tmplt' in tmplt_filename:
+        if tmplt_filename.endswith(".png") or tmplt_filename.endswith(".jpg"):
+            tmplt_directory = os.path.join(tmplt_folder, tmplt_filename)
+        else:
+            print("Please set name and extension of template image to 'tmplt.png' or 'tmplt.jpg'")
+            exit()
+            
+    if tmplt_filename == None:
+        print("No tmplt.png or tmplt.jpg found in the directory")
+        exit()
+
+temp_img_directory = 'temp_img_name_doesnt_matter.png'
 
 video_frame_count = 0
 new_y_init = [0]
 
 vid = cv2.VideoCapture(vid_directory)
 template_img = cv2.imread(tmplt_directory, cv2.IMREAD_GRAYSCALE)
+_, template_img = cv2.threshold(template_img, 127, 255, cv2.THRESH_BINARY)
 
 
 while True:
-    vid.set(cv2.CAP_PROP_POS_MSEC,(video_frame_count*INTERVAL))    #extract frame from video every 'interval'
+    #look at a frame from the video every 'interval' until video ends
+    #then check if frame has an image of the template and
+    #extract small picture of template and the accompanying text
+
+    vid.set(cv2.CAP_PROP_POS_MSEC,(video_frame_count*INTERVAL))    
     ret, frame = vid.read()
 
     if ret == False:
