@@ -2,7 +2,8 @@ import cv2
 import numpy as np
 import datetime
 import os
-DAMAGE_TEXT_LENGTH = 200
+DAMAGE_TEXT_HEIGHT = 5
+DAMAGE_TEXT_LENGTH = 300
 THRESHOLD = 0.8
 MAX_DIST =  100
 
@@ -56,9 +57,9 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
                 failed_detection_right_after_successful_detect = True
                 
 
-                cv2.rectangle(image_in, (x, y), (x + w + DAMAGE_TEXT_LENGTH, y + h), (0,255,255), 2)
+                cv2.rectangle(image_in, (x, y - DAMAGE_TEXT_HEIGHT), (x + w + DAMAGE_TEXT_LENGTH, y + h + DAMAGE_TEXT_HEIGHT), (0,255,255), 2)
                 #crop image to get only numbers
-                cropped_image = image_in[y:y+h, x:x + w + DAMAGE_TEXT_LENGTH] 
+                cropped_image = image_in[y - DAMAGE_TEXT_HEIGHT:y + h + DAMAGE_TEXT_HEIGHT, x:x + w + DAMAGE_TEXT_LENGTH] 
                 #cropped_image = image_in
 
                 currentTime = datetime.datetime.now().strftime("%d-%m-%Y--%H-%M-%S.%f")[:-3]
