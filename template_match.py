@@ -4,7 +4,7 @@ import datetime
 import os
 from color_lower_upper_bound import get_limits
 
-DAMAGE_TEXT_HEIGHT = 1
+DAMAGE_TEXT_HEIGHT = 2
 THRESHOLD = 0.8
 MAX_DIST =  100
 COLOR = [80,58,214] #manually get the color red in BGR
@@ -64,7 +64,7 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
             rectangle_number = np.shape(rectangles)[0]
             #print(f"No. of rectangle(s) detected: {rectangle_number}")
             rect_y_loc_list = rectangles[:,1]
-            print(f"{rect_y_loc_list} - newest list of y from rectangles")
+            print(f"{rect_y_loc_list} - newest list of y from rectangles") #keep for debugging
 
             dist_new_to_old = y - new_y[iteration]
             
@@ -77,10 +77,10 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
             else:
                 failed_detection_right_after_successful_detect = True
                 
-                cv2.rectangle(image_in, (x, y - DAMAGE_TEXT_HEIGHT), (x + w + damage_text_length, y + h + DAMAGE_TEXT_HEIGHT), (0,255,255), 2)
+                cv2.rectangle(image_in, (x, y - 4), (x + w + damage_text_length, y + h + 4), (255,255,255), 1)
                 
                 #crop image to get only tmplt image and numbers
-                cropped_image = image_in[y - DAMAGE_TEXT_HEIGHT:y + h + DAMAGE_TEXT_HEIGHT, x:x + w + damage_text_length] 
+                cropped_image = image_in[y - DAMAGE_TEXT_HEIGHT:y + h + DAMAGE_TEXT_HEIGHT, x : x + w + damage_text_length] 
                 
                 #detect red number and crop away everything else including tmplt image
                 cropped_image_rightmost_red_pixel = find_rightmost_red_pixel(cropped_image)

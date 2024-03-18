@@ -37,8 +37,7 @@ new_y_init = [0]
 
 vid = cv2.VideoCapture(vid_directory)
 template_img = cv2.imread(tmplt_directory, cv2.IMREAD_GRAYSCALE)
-_, template_img = cv2.threshold(template_img, 127, 255, cv2.THRESH_BINARY)
-
+_, template_img = cv2.threshold(template_img, 150, 255, cv2.THRESH_BINARY)
 
 while True:
     #look at a frame from the video every 'interval' until video ends
