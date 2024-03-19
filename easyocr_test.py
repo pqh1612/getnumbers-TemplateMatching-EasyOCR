@@ -18,7 +18,7 @@ def easyocr_recognition(image_folder):
             img = cv2.imread(image_path)
 
             ###PREPROCESS IMAGE FOR OCR
-            resize_factor = 3.0
+            resize_factor = 4.0
             img = cv2.resize(img, (0, 0), fx=resize_factor, fy=resize_factor)
 
             # apply COLOR mask to HSV_img to get only COLOR in the original img
@@ -50,7 +50,7 @@ def easyocr_recognition(image_folder):
             with open('output.txt', 'a') as file:
                 for t in text_:
                     coordinate, text, score = t
-                    file.write(text + '\n')
+                    file.write(text + ";" + filename + '\n')
 
 image_folder = './dmg_frame_data/'
 easyocr_recognition(image_folder)
