@@ -8,6 +8,7 @@ DAMAGE_TEXT_HEIGHT = 2
 THRESHOLD = 0.8
 MAX_DIST =  100
 COLOR = [80,58,214] #manually get the color red in BGR
+ALPHA = 0.05  # Transparency factor. 
 
 damage_text_length = 300
 
@@ -76,15 +77,17 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
                 
             else:
                 failed_detection_right_after_successful_detect = True
-                
-                cv2.rectangle(image_in, (x, y - 4), (x + w + damage_text_length, y + h + 4), (255,255,255), 1)
-                
+
+                image_in_overlay = image_in.copy() 
+                cv2.rectangle(image_in_overlay, (x, y - DAMAGE_TEXT_HEIGHT), (x + w + damage_text_length, y + h + (DAMAGE_TEXT_HEIGHT*2)), (255,255,255), 1) 
+                image_in = cv2.addWeighted(image_in_overlay, ALPHA, image_in, 1 - ALPHA, 0) 
+
                 #crop image to get only tmplt image and numbers
-                cropped_image = image_in[y - DAMAGE_TEXT_HEIGHT:y + h + DAMAGE_TEXT_HEIGHT, x : x + w + damage_text_length] 
+                cropped_image = image_in[y :y + h, x : x + w + damage_text_length] 
                 
                 #detect red number and crop away everything else including tmplt image
                 cropped_image_rightmost_red_pixel = find_rightmost_red_pixel(cropped_image)
-                cropped_image = image_in[y - DAMAGE_TEXT_HEIGHT:y + h + DAMAGE_TEXT_HEIGHT, x + w : x + cropped_image_rightmost_red_pixel + 10]
+                cropped_image = image_in[y :y + h + (DAMAGE_TEXT_HEIGHT*2) -1, x + w : x + cropped_image_rightmost_red_pixel + 10]
 
                 currentTime = datetime.datetime.now().strftime("%d-%m-%Y--%H-%M-%S.%f")[:-3]
                 cv2.imwrite('./dmg_frame_data/' + f'{currentTime}' + '_dmg_instance_' + str(iteration + 1) + '.png', cropped_image)
@@ -94,7 +97,7 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
 
             new_y[iteration] = y
 
-            print(f"{new_y} - new_y list")
+            print(f"{new_y} - new_y list") #keep for debugging
     
     ###LOGIC WHEN NO DETECTION            
     else:
