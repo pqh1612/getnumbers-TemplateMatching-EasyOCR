@@ -25,23 +25,15 @@ def easyocr_recognition(image_folder):
             hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
             lower_COLOR, upper_COLOR = get_limits(COLOR)
             mask = cv2.inRange(hsv_img, lower_COLOR, upper_COLOR)
-            img_with_only_COLOR = cv2.bitwise_and(img, img, mask=mask)
-            img = img_with_only_COLOR
+            img = cv2.bitwise_and(img, img, mask=mask)
 
-            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            blur_img = cv2.GaussianBlur(gray_img, (5, 5), 0)
-            _, threshold_img = cv2.threshold(blur_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img = cv2.GaussianBlur(img, (5, 5), 0)
+            _, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+            
             kernel = np.ones((5,5),np.uint8)
-            eroded_img = cv2.erode(threshold_img, kernel, iterations=1)
-
-            cv2.imshow("Threshold Image", threshold_img)
-            cv2.imshow("Eroded Image", eroded_img)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
-
-            #img = threshold_img
-            img = eroded_img
+            img = cv2.erode(img, kernel, iterations = 2)
+            img = cv2.dilate(img, kernel, iterations = 1)
 
             text_ = reader.readtext(img, allowlist ='0123456789')
             print(text_)  #keep for debugging 
