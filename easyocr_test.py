@@ -2,6 +2,7 @@ import cv2
 import easyocr
 import os
 import numpy as np
+import csv
 from color_lower_upper_bound import get_limits
 
 COLOR = [80,58,214] # manually input the BGR color (in this case, red)
@@ -38,12 +39,16 @@ def easyocr_recognition(image_folder):
             text_ = reader.readtext(img, allowlist ='0123456789')
             print(text_)  #keep for debugging 
 
-            # get text result by OCR from 'text_' list and put in output.txt
-            with open('output.txt', 'a') as file:
+            # get text result by OCR from 'text_' list and put in output.csv
+            with open('output.csv', 'a', newline='') as csvfile:
+                header = ["Text", "File name"]
+                writer = csv.DictWriter(csvfile, fieldnames=header)
+                if csvfile.tell() == 0:
+                    writer.writeheader()
                 for t in text_:
-                    coordinate, text, score = t
-                    file.write(text + ";" + filename + '\n')
-
+                    _, text, _ = t
+                    writer.writerow({header[0]: text, header[1]: filename})
+                    
 image_folder = './dmg_frame_data/'
 easyocr_recognition(image_folder)
 
