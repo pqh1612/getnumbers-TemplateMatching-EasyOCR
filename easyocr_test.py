@@ -8,6 +8,7 @@ from color_lower_upper_bound import get_limits
 COLOR = [80,58,214] # manually input the BGR color (in this case, red)
 
 def easyocr_recognition(image_folder):
+
     # initiate text detector instance
     reader = easyocr.Reader(['en'], gpu=True)
 
@@ -49,6 +50,4 @@ def easyocr_recognition(image_folder):
                     _, text, _ = t
                     writer.writerow({header[0]: text, header[1]: filename})
                     
-image_folder = './dmg_frame_data/'
-easyocr_recognition(image_folder)
 
