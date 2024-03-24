@@ -1,0 +1,1 @@
+Put your video here and rename it to "vid" with the extension .mp4 or .mkw

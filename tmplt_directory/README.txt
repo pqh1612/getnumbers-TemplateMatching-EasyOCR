@@ -1,0 +1,1 @@
+Put your template image here and rename it to "tmplt" with the extension .png or .jpg
