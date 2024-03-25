@@ -101,6 +101,10 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
     
     ###LOGIC WHEN NO DETECTION            
     else:
+        #Edge case when no detection right after a successful detection. I.e: Detect, no detect, detect
+        #This is to prevent the program from capturing duplicate number
+        #since new_y is reset to 0 after a failed detection thus leading to MAX_DIST condition being met
+
         if failed_detection_right_after_successful_detect == True:
             print("Ignore")
             failed_detection_right_after_successful_detect = False
