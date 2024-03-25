@@ -4,7 +4,7 @@ from template_match import template_matching, detection_check
 from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
-def get_frame_data(vid_folder, tmplt_folder):
+def getting_frame_data(vid_folder, tmplt_folder):
     
     for vid_filename in os.listdir(vid_folder):
         if 'vid' in vid_filename:
