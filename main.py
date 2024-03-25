@@ -1,5 +1,5 @@
 from get_frame_data import get_frame_data
-from easyocr_test import easyocr_recognition
+from easyocr_read_numbers import easyocr_recognition
 
 vid_folder = './vid_directory/'
 tmplt_folder = './tmplt_directory/'
