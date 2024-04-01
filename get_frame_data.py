@@ -5,7 +5,7 @@ from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
 def getting_frame_data(vid_folder, tmplt_folder):
-    
+    '''
     for vid_filename in os.listdir(vid_folder):
         if 'vid' in vid_filename:
             if vid_filename.endswith(".mp4") or vid_filename.endswith(".mkv"):
@@ -30,7 +30,10 @@ def getting_frame_data(vid_folder, tmplt_folder):
         if tmplt_filename == None:
             print("No tmplt.png or tmplt.jpg found in the directory")
             exit()
-
+    '''
+    vid_directory = vid_folder
+    tmplt_directory = tmplt_folder
+    
     temp_img_directory = 'temp_img_name_doesnt_matter.png'
 
     video_frame_count = 0
