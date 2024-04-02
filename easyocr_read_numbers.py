@@ -7,7 +7,7 @@ from color_lower_upper_bound import get_limits
 
 COLOR = [80,58,214] # manually input the BGR color (in this case, red)
 
-def easyocr_recognition(image_folder):
+def easyocr_recognition(image_folder, output_folder):
 
     # initiate text detector instance
     reader = easyocr.Reader(['en'], gpu=True)
@@ -25,7 +25,7 @@ def easyocr_recognition(image_folder):
             print(text_)  #keep for debugging 
 
             # get text result by OCR from 'text_' list and put in output.csv
-            with open('output.csv', 'a', newline='') as csvfile:
+            with open(output_folder + '/' + '/output.csv', 'a', newline='') as csvfile:
                 header = ["Text", "File name"]
                 writer = csv.DictWriter(csvfile, fieldnames=header)
                 if csvfile.tell() == 0:

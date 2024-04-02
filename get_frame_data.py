@@ -4,7 +4,7 @@ from template_match import template_matching, detection_check
 from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
-def getting_frame_data(vid_folder, tmplt_folder):
+def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
     '''
     for vid_filename in os.listdir(vid_folder):
         if 'vid' in vid_filename:
@@ -33,7 +33,7 @@ def getting_frame_data(vid_folder, tmplt_folder):
     '''
     vid_directory = vid_folder
     tmplt_directory = tmplt_folder
-    
+
     temp_img_directory = 'temp_img_name_doesnt_matter.png'
 
     video_frame_count = 0
@@ -59,7 +59,7 @@ def getting_frame_data(vid_folder, tmplt_folder):
 
         img = cropping_n_resizing(temp_img_directory)
         yloc, xloc, h, w = template_matching(img, template_img)
-        new_y_init = detection_check(yloc, xloc, h, w, img, new_y_init)
+        new_y_init = detection_check(yloc, xloc, h, w, img, new_y_init, frame_image_folder)
 
         video_frame_count += 1
             

@@ -44,7 +44,7 @@ def template_matching(image_in, template_img):
     yloc, xloc = np.where(result >= THRESHOLD)
     return yloc, xloc, h, w
 
-def detection_check(yloc, xloc, h, w, image_in, new_y):
+def detection_check(yloc, xloc, h, w, image_in, new_y, frame_image_folder):
     failed_detection_right_after_successful_detect = False
     
     #either yloc or xloc exists means we detect something > THRESHOLD
@@ -90,7 +90,7 @@ def detection_check(yloc, xloc, h, w, image_in, new_y):
                 cropped_image = image_in[y :y + h + (DAMAGE_TEXT_HEIGHT*2) -1, x + w : x + cropped_image_rightmost_red_pixel + 10]
 
                 currentTime = datetime.datetime.now().strftime("%d-%m-%Y--%H-%M-%S.%f")[:-3]
-                cv2.imwrite('./dmg_frame_data/' + f'{currentTime}' + '_dmg_instance_' + str(iteration + 1) + '.png', cropped_image)
+                cv2.imwrite(frame_image_folder + '/' + f'{currentTime}' + '_dmg_instance_' + str(iteration + 1) + '.png', cropped_image)
 
             if len(new_y) < rectangle_number:
                 new_y = np.append(new_y, 0)
