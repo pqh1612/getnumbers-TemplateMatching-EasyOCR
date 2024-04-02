@@ -5,32 +5,6 @@ from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
 def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
-    '''
-    for vid_filename in os.listdir(vid_folder):
-        if 'vid' in vid_filename:
-            if vid_filename.endswith(".mp4") or vid_filename.endswith(".mkv"):
-                vid_directory = os.path.join(vid_folder, vid_filename)
-            else:
-                print("Please set name and extension of video to 'vid.mp4' or 'vid.mkv'")
-                exit()
-
-        if vid_filename == None:
-            print("No vid.mp4 or vid.mkv found in the directory")
-            exit()
-
-    tmplt_folder = './tmplt_directory/'
-    for tmplt_filename in os.listdir(tmplt_folder):
-        if 'tmplt' in tmplt_filename:
-            if tmplt_filename.endswith(".png") or tmplt_filename.endswith(".jpg"):
-                tmplt_directory = os.path.join(tmplt_folder, tmplt_filename)
-            else:
-                print("Please set name and extension of template image to 'tmplt.png' or 'tmplt.jpg'")
-                exit()
-                
-        if tmplt_filename == None:
-            print("No tmplt.png or tmplt.jpg found in the directory")
-            exit()
-    '''
     vid_directory = vid_folder
     tmplt_directory = tmplt_folder
 
