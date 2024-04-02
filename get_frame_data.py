@@ -5,8 +5,39 @@ from crop_n_resize import cropping_n_resizing
 INTERVAL = 400
 
 def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
-    vid_directory = vid_folder
-    tmplt_directory = tmplt_folder
+    vid_folder_default = './vid_directory/'
+    tmplt_folder_default = './tmplt_directory/'
+  
+    # check if user input is default or not (if not, use user input as directory)
+    if vid_folder == vid_folder_default:
+        for vid_filename in os.listdir(vid_folder_default):
+            if 'vid' in vid_filename:
+                if vid_filename.endswith(".mp4") or vid_filename.endswith(".mkv"):
+                    vid_directory = os.path.join(vid_folder_default, vid_filename)
+                else:
+                    print("Please set name and extension of video to 'vid.mp4' or 'vid.mkv'")
+                    exit()
+
+            if vid_filename == None:
+                print("No vid.mp4 or vid.mkv found in the directory")
+                exit()
+    else:
+        vid_directory = vid_folder
+    
+    if tmplt_folder == tmplt_folder_default:
+        for tmplt_filename in os.listdir(tmplt_folder_default):
+            if 'tmplt' in tmplt_filename:
+                if tmplt_filename.endswith(".png") or tmplt_filename.endswith(".jpg"):
+                    tmplt_directory = os.path.join(tmplt_folder_default, tmplt_filename)
+                else:
+                    print("Please set name and extension of template image to 'tmplt.png' or 'tmplt.jpg'")
+                    exit()
+                    
+            if tmplt_filename == None:
+                print("No tmplt.png or tmplt.jpg found in the directory")
+                exit()
+    else:
+        tmplt_directory = tmplt_folder
 
     temp_img_directory = 'temp_img_name_doesnt_matter.png'
 

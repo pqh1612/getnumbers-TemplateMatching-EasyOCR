@@ -10,7 +10,7 @@ output_csv_folder = './'
 
 root = tk.Tk()
 root.title("Frame Data Extraction")
-root.geometry("600x300")
+root.geometry("600x400")
 
 init_label = tk.Label(root, text="Select an option:").grid(row=0, column=1)
 
@@ -56,7 +56,7 @@ def extract_frame_data():
     getting_frame_data(vid_directory, tmplt_directory, frame_image_folder)
     tk.messagebox.showinfo("Done","Frame data extracted successfully!")
 
-get_frame_button = tk.Button(root, text="Get frame data", command=extract_frame_data).grid(row=7, column=1)
+get_frame_button = tk.Button(root, text="Get frame data", command=extract_frame_data, fg='red', pady= 5).grid(row=7, column=1, pady=10)
 
 def choose_output_csv_folder():  
     filename = filedialog.askdirectory(title="Select directory for csv file", mustexist=True)
@@ -74,6 +74,6 @@ def extract_csv_data():
     easyocr_recognition(frame_image_folder, output_csv_folder)
     tk.messagebox.showinfo("Done","Output.csv created successfully!")
 
-get_frame_button = tk.Button(root, text="Get output.csv file", command=extract_csv_data).grid(row=10, column=1)
+get_frame_button = tk.Button(root, text="Get output.csv file", command=extract_csv_data, fg='red', pady= 5).grid(row=10, column=1, pady=10)
 
 root.mainloop()
