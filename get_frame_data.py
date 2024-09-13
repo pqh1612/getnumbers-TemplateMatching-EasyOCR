@@ -2,12 +2,11 @@ import cv2
 import os
 from template_match import template_matching, detection_check
 from crop_n_resize import cropping_n_resizing
-INTERVAL = 400
 
-def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
+def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder, interval: int = 300, begin_time: int = 0):
     vid_folder_default = './vid_directory/'
     tmplt_folder_default = './tmplt_directory/'
-  
+
     # check if user input is default or not (if not, use user input as directory)
     if vid_folder == vid_folder_default:
         for vid_filename in os.listdir(vid_folder_default):
@@ -41,7 +40,7 @@ def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
 
     temp_img_directory = 'temp_img_name_doesnt_matter.png'
 
-    video_frame_count = 0
+    video_frame_count = 1
     new_y_init = [0]
 
     vid = cv2.VideoCapture(vid_directory)
@@ -53,7 +52,7 @@ def getting_frame_data(vid_folder, tmplt_folder, frame_image_folder):
         #then check if frame has an image of the template and
         #extract small picture of template and the accompanying text
 
-        vid.set(cv2.CAP_PROP_POS_MSEC,(video_frame_count*INTERVAL))    
+        vid.set(cv2.CAP_PROP_POS_MSEC,(video_frame_count*interval+begin_time))    
         ret, frame = vid.read()
 
         if ret == False:
